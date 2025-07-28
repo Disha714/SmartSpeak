@@ -6,6 +6,7 @@ from pydub import AudioSegment
 from textblob import TextBlob
 from langdetect import detect
 from transformers import pipeline
+from dotenv import load_dotenv
 import os
 import time
 import tempfile
@@ -16,10 +17,8 @@ app.secret_key = "smartspeak_secret_key"
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 app.config['UPLOAD_FOLDER'] = 'static'
-
-# LLM API key
-TOGETHER_API_KEY = "d169fdf80972ab1897c66ef02804c00ec9cbbcbf39dfdec497880edbeddaa6f8"
-
+load_dotenv()
+TOGETHER_API_KEY = os.getenv("TOGETHER_API_KEY")
 # HuggingFace summarization
 summarizer = pipeline("summarization", model="t5-small", tokenizer="t5-small")
 
