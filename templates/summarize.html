@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet" href="static/style.css">
+<head>
+  <meta charset="UTF-8">
+  <title>Speech to Text - SmartSpeak</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to bottom right, #8B0000, #000000);
+      color: white;
+      min-height: 100vh;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: rgba(0, 0, 0, 0.8);
+      padding: 1rem 2rem;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #fff;
+    }
+
+    .nav-link {
+      color: #fff;
+      text-decoration: none;
+      font-size: 1rem;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      max-width: 500px;
+      gap: 15px;
+    }
+
+    input[type="file"] {
+      padding: 10px;
+      font-size: 1rem;
+      border-radius: 10px;
+      background-color: white;
+      color: #333;
+      border: none;
+    }
+
+    button {
+      padding: 12px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: 10px;
+      border: none;
+      background-color: white;
+      color: #8B0000;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    button:hover {
+      background-color: #8B0000;
+      color: white;
+    }
+
+    a.back-link {
+      margin-top: 20px;
+      text-decoration: none;
+      color: #ffffffaa;
+      font-size: 0.9rem;
+    }
+
+    a.back-link:hover {
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="logo">SmartSpeak</div>
+    <a href="/" class="nav-link">Dashboard</a>
+  </div>
+
+  <div class="container">
+    <h1>Summarization</h1>
+    <form method="POST" enctype="multipart/form-data">
+      <input type="file" name="audio" accept=".wav,.mp3,.ogg" required>
+      <button type="submit">Convert to Text</button>
+    </form>
+    <a class="back-link" href="/">← Back to Home</a>
+  </div>
+  <!-- Footer -->
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Language Translation - SmartSpeak</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to bottom right, #8b0000, #000000);
+      color: white;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: white;
+    }
+
+    .nav-link {
+      color: white;
+      text-decoration: none;
+      font-size: 1rem;
+      border: 1px solid white;
+      padding: 5px 15px;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+    }
+
+    .nav-link:hover {
+      background-color: white;
+      color: #8B0000;
+    }
+
+    .container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      padding: 40px 20px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      text-align: center;
+      color: white;
+    }
+
+    textarea, select {
+      width: 100%;
+      max-width: 600px;
+      padding: 15px;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-family: 'Poppins', sans-serif;
+      resize: vertical;
+      box-shadow: 0 3px 15px rgba(255, 255, 255, 0.1);
+    }
+
+    .btn {
+      background: #ff4444;
+      border: none;
+      padding: 12px 30px;
+      font-size: 1rem;
+      color: white;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(255, 0, 0, 0.4);
+    }
+
+    .btn:hover {
+      background: #ff2222;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 0, 0, 0.6);
+    }
+
+    .output {
+      width: 100%;
+      max-width: 600px;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 15px;
+      border-radius: 10px;
+      font-size: 1.1rem;
+      margin-top: 10px;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="logo">SmartSpeak</div>
+    <a href="/" class="nav-link">Dashboard</a>
+  </div>
+
+  <div class="container">
+    <h1>Language Translation with TTS</h1>
+
+    <form action="/translate" method="POST">
+      <textarea name="text" rows="5" placeholder="Enter text to translate" required></textarea>
+      
+      <select name="target_lang" required>
+        <option value="">Select Target Language</option>
+        <option value="hi">Hindi</option>
+        <option value="fr">French</option>
+        <option value="es">Spanish</option>
+        <option value="de">German</option>
+        <option value="te">Telugu</option>
+        <!-- Add more if needed -->
+      </select>
+      
+      <button type="submit" class="btn">Translate and Speak</button>
+    </form>
+
+    {% if translated_text %}
+      <div class="output">
+        <strong>Translated Text:</strong><br>
+        {{ translated_text }}
+      </div>
+    {% endif %}
+  </div>
+
+</body>
+</html>

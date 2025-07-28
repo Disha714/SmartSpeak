@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SmartSpeak Chat</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to bottom right, #8B0000, #000000);
+      color: white;
+      min-height: 100vh;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: rgba(0, 0, 0, 0.85);
+      padding: 1rem 2rem;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: white;
+    }
+
+    .nav-link {
+      color: white;
+      text-decoration: none;
+      font-size: 1rem;
+      border: 1px solid white;
+      padding: 6px 15px;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+    }
+
+    .nav-link:hover {
+      background-color: white;
+      color: #8B0000;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 30px;
+      text-align: center;
+      color: white;
+    }
+
+    .chat-box {
+      width: 100%;
+      max-width: 800px;
+      background-color: rgba(255, 255, 255, 0.05);
+      border-radius: 20px;
+      padding: 20px;
+      max-height: 400px;
+      overflow-y: auto;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .message {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .avatar {
+      font-size: 1.5rem;
+      line-height: 1;
+    }
+
+    .text {
+      flex: 1;
+    }
+
+    .user-text {
+      color: #FFD700;
+    }
+
+    .ai-text {
+      color: #90EE90;
+    }
+
+    form {
+      width: 100%;
+      max-width: 800px;
+      display: flex;
+      gap: 10px;
+    }
+
+    textarea {
+      flex: 1;
+      padding: 15px;
+      font-size: 1rem;
+      border-radius: 10px;
+      border: none;
+      resize: vertical;
+    }
+
+    button {
+      padding: 15px 20px;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 10px;
+      border: none;
+      background-color: white;
+      color: #8B0000;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #8B0000;
+      color: white;
+    }
+
+    .audio-output {
+      margin-top: 30px;
+      text-align: center;
+    }
+
+    audio {
+      margin-top: 10px;
+    }
+
+    .footer-links {
+      margin-top: 30px;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #ffffffcc;
+    }
+
+    .footer-links a {
+      color: #ffffffcc;
+      text-decoration: none;
+      margin: 0 10px;
+    }
+
+    .footer-links a:hover {
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="logo">SmartSpeak</div>
+    <a href="/" class="nav-link">Dashboard</a>
+  </div>
+
+  <div class="container">
+    <h1>Chat with AI</h1>
+
+    <div class="chat-box" id="chat-box">
+      {% for item in history %}
+  <div class="message">
+    <div class="avatar">🧑</div>
+    <div class="text user-text">
+      <strong>You:</strong> {{ item.question }}
+      <div style="font-size: 0.8rem; color: #aaa;">{{ item.timestamp }}</div>
+    </div>
+  </div>
+  <div class="message">
+    <div class="avatar">🤖</div>
+    <div class="text ai-text">
+      <strong>AI:</strong> {{ item.answer }}
+      <div style="font-size: 0.8rem; color: #aaa;">{{ item.timestamp }}</div>
+    </div>
+  </div>
+{% endfor %}
+
+
+    </div>
+
+    <form method="POST">
+      <textarea name="prompt" rows="2" placeholder="Ask something..." required></textarea>
+      <button type="submit">Send</button>
+    </form>
+
+    {% if audio_file %}
+    <div class="audio-output">
+      <audio controls>
+        <source src="{{ url_for('static', filename=audio_file) }}" type="audio/mpeg">
+        Your browser does not support the audio element.
+      </audio>
+    </div>
+    {% endif %}
+
+    <div class="footer-links">
+      <a href="/reset_chat">🗑️ Clear Chat</a>
+      <a href="/">← Back to Home</a>
+    </div>
+  </div>
+
+  <!-- 🧠 Auto-scroll to bottom -->
+  <script>
+    const chatBox = document.getElementById("chat-box");
+    chatBox.scrollTop = chatBox.scrollHeight;
+  </script>
+
+</body>
+</html>

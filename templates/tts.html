@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Text to Speech - SmartSpeak</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to bottom right, #8B0000, #000000);
+      color: white;
+      min-height: 100vh;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: rgba(0, 0, 0, 0.8);
+      padding: 1rem 2rem;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: white;
+    }
+
+    .nav-link {
+      color: white;
+      text-decoration: none;
+      font-size: 1rem;
+      border: 2px solid #8B0000;
+      padding: 6px 14px;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .nav-link:hover {
+      background-color: #8B0000;
+      color: white;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      width: 100%;
+      max-width: 600px;
+    }
+
+    textarea {
+      width: 100%;
+      padding: 15px;
+      font-size: 1rem;
+      border-radius: 10px;
+      font-family: 'Poppins', sans-serif;
+      resize: vertical;
+      border: none;
+      background-color: white;
+      color: #333;
+      box-shadow: 0 3px 15px rgba(255, 255, 255, 0.1);
+    }
+
+    select {
+      padding: 10px;
+      font-size: 1rem;
+      border-radius: 10px;
+      background-color: white;
+      color: #333;
+      border: none;
+    }
+
+    input[type="submit"] {
+      padding: 12px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: 10px;
+      border: none;
+      background-color: white;
+      color: #8B0000;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #8B0000;
+      color: white;
+    }
+
+    audio {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="logo">SmartSpeak</div>
+    <a href="/" class="nav-link">Dashboard</a>
+  </div>
+
+  <div class="container">
+    <h1>Text to Speech</h1>
+    <form action="/tts" method="POST">
+      <textarea name="text" rows="5" placeholder="Enter text here..." required></textarea>
+
+      <label for="voice">Select Voice:</label>
+      <select name="voice">
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="india">Indian English</option>
+          <option value="us">US English</option>
+          <option value="uk">UK English</option>
+      </select>
+
+      <input type="submit" value="Convert to Speech">
+    </form>
+
+    {% if audio_file %}
+    <div style="margin-top: 20px;">
+      <audio controls>
+        <source src="{{ url_for('static', filename=audio_file) }}" type="audio/mpeg">
+        Your browser does not support the audio element.
+      </audio>
+    </div>
+    {% endif %}
+  </div>
+
+</body>
+</html>

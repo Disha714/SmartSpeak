@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>SmartSpeak - AI Voice Tools</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to bottom right, #8B0000, #000000);
+      color: white;
+      min-height: 100vh;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: white;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 30px;
+      text-align: center;
+      color: white;
+    }
+
+    .card-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      width: 100%;
+      max-width: 1000px;
+    }
+
+    .card {
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 30px 20px;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+    }
+
+    .card h2 {
+      margin-bottom: 15px;
+      font-size: 1.5rem;
+      color: white;
+    }
+
+    .card p {
+      font-size: 0.95rem;
+      margin-bottom: 20px;
+      color: #ddd;
+    }
+
+    .card a {
+      display: inline-block;
+      padding: 10px 20px;
+      font-weight: 600;
+      background-color: white;
+      color: #8B0000;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .card a:hover {
+      background-color: #8B0000;
+      color: white;
+    }
+
+    .footer {
+      margin-top: 40px;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #ffffffcc;
+      padding-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="logo">SmartSpeak</div>
+  </div>
+
+  <div class="container">
+    <h1>SmartSpeak - AI Voice Tools</h1>
+    <div class="card-container">
+      <div class="card">
+        <h2>Text to Speech</h2>
+        <p>Convert your text into realistic speech with a single click.</p>
+        <a href="/tts">Try TTS</a>
+      </div>
+
+      <div class="card">
+        <h2>Speech to Text</h2>
+        <p>Convert your speech or audio files into accurate text format.</p>
+        <a href="/stt">Try STT</a>
+      </div>
+
+      <div class="card">
+        <h2>Sentiment to Speech</h2>
+        <p>Analyze text sentiment and listen to expressive tone output.</p>
+        <a href="/sentiment">Try Sentiment TTS</a>
+      </div>
+
+      <div class="card">
+        <h2>Speech Summarization</h2>
+        <p>Upload an audio file to get a concise summary of the spoken content.</p>
+        <a href="/summarize">Summarize Audio</a>
+      </div>
+
+      <div class="card">
+        <h2>Translate and Speak</h2>
+        <p>Translate input text to another language and listen to it aloud.</p>
+        <a href="/translate">Try Translate & Speak</a>
+      </div>
+      <div class="card">
+  <h2>Ask AI Chat</h2>
+  <p>Chat with an AI assistant and hear responses.</p>
+  <a href="/llm">Try Chat</a>
+</div>
+
+
+    </div>
+  </div>
+
+  <div class="footer">
+    &copy; 2025 SmartSpeak Inc. All rights reserved.
+  </div>
+</body>
+</html>
