@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Speech to Text - SmartSpeak{% endblock %}
+{% block content %}
+  <div class="page-header">
+    <div class="icon-badge">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/><path d="M9 21h6"/></svg>
+    </div>
+    <div>
+      <h1>Speech to Text</h1>
+      <p>Upload an audio file — SmartSpeak transcribes it with Whisper.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <form method="POST" enctype="multipart/form-data">
+      <div class="field">
+        <label for="audio">Audio file</label>
+        <input type="file" id="audio" name="audio" accept=".wav,.mp3,.ogg" required>
+      </div>
+      <button type="submit">Transcribe</button>
+    </form>
+
+    {% if transcript %}
+    <div class="result">
+      <div class="result-label">Transcript</div>
+      <p>{{ transcript }}</p>
+    </div>
+    {% endif %}
+  </div>
+{% endblock %}

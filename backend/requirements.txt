@@ -1,0 +1,23 @@
+Flask
+Flask-Session
+python-dotenv
+requests
+
+# Speech
+gTTS
+pydub
+openai-whisper
+
+# NLP / sentiment / summarization / translation
+textblob
+transformers
+torch
+deep-translator
+
+# RAG chat (retrieval-augmented conversation)
+sentence-transformers
+faiss-cpu
+numpy
+
+# Image captioning (image-to-speech)
+pillow

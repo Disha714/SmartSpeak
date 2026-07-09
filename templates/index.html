@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}SmartSpeak{% endblock %}
+{% block content %}
+  <div class="page-header">
+    <div class="icon-badge">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2 6 4-12 2 6h4"/></svg>
+    </div>
+    <div>
+      <h1>SmartSpeak</h1>
+      <p>Seven tools for turning text, speech, sentiment, and images into natural spoken output.</p>
+    </div>
+  </div>
+
+  <div class="tool-grid">
+    <a href="/tts" class="tool-row">
+      <div class="icon-badge"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10v4h4l5 5V5L7 10H3z"/><path d="M16 8.5a4.5 4.5 0 0 1 0 7"/></svg></div>
+      <div class="tool-row-text"><h3>Text to Speech</h3><p>Convert written text into spoken audio with voice options.</p></div>
+    </a>
+    <a href="/stt" class="tool-row">
+      <div class="icon-badge"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/></svg></div>
+      <div class="tool-row-text"><h3>Speech to Text</h3><p>Transcribe an uploaded audio file with Whisper.</p></div>
+    </a>
+    <a href="/sentiment" class="tool-row">
+      <div class="icon-badge"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2 6 4-12 2 6h4"/></svg></div>
+      <div class="tool-row-text"><h3>Sentiment to Speech</h3><p>Speech rate and volume shift with the detected sentiment.</p></div>
+    </a>
+    <a href="/summarize" class="tool-row">
+      <div class="icon-badge"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l5 5v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M9 13h6M9 17h6"/></svg></div>
+      <div class="tool-row-text"><h3>Speech Summarization</h3><p>Transcribe an audio file, then summarize what was said.</p></div>
+    </a>
+    <a href="/translate" class="tool-row">
+      <div class="icon-badge"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/></svg></div>
+      <div class="tool-row-text"><h3>Translate &amp; Speak</h3><p>Translate text to another language and hear it spoken.</p></div>
+    </a>
+    <a href="/image" class="tool-row">
+      <div class="icon-badge"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.6"/></svg></div>
+      <div class="tool-row-text"><h3>Image to Speech</h3><p>Caption an uploaded image, then hear the caption spoken.</p></div>
+    </a>
+    <a href="/llm" class="tool-row">
+      <div class="icon-badge"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v11H8l-4 4V4z"/></svg></div>
+      <div class="tool-row-text"><h3>Ask AI Chat</h3><p>Chat with a RAG-augmented assistant and hear the replies.</p></div>
+    </a>
+  </div>
+{% endblock %}

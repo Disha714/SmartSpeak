@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Sentiment to Speech - SmartSpeak{% endblock %}
+{% block content %}
+  <div class="page-header">
+    <div class="icon-badge">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2 6 4-12 2 6h4"/></svg>
+    </div>
+    <div>
+      <h1>Sentiment to Speech</h1>
+      <p>Speech rate and volume are shaped by the detected sentiment, not just a label.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <form method="POST">
+      <div class="field">
+        <label for="text">Text</label>
+        <textarea id="text" name="text" rows="5" placeholder="Enter text to analyze and convert..." required></textarea>
+      </div>
+      <button type="submit">Analyze &amp; speak</button>
+    </form>
+
+    {% if sentiment %}
+    <div class="result">
+      <div class="result-label">Sentiment</div>
+      <p>{{ sentiment }} <span class="mono">polarity {{ polarity }}</span></p>
+      <audio controls>
+        <source src="{{ url_for('static', filename=audio_file) }}" type="audio/mpeg">
+      </audio>
+    </div>
+    {% endif %}
+  </div>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Text to Speech - SmartSpeak{% endblock %}
+{% block content %}
+  <div class="page-header">
+    <div class="icon-badge">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10v4h4l5 5V5L7 10H3z"/><path d="M16 8.5a4.5 4.5 0 0 1 0 7"/><path d="M18.5 6a8 8 0 0 1 0 12"/></svg>
+    </div>
+    <div>
+      <h1>Text to Speech</h1>
+      <p>Enter text and choose a voice — SmartSpeak converts it to audio.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <form action="/tts" method="POST">
+      <div class="field">
+        <label for="text">Text</label>
+        <textarea id="text" name="text" rows="5" placeholder="Enter text here..." required></textarea>
+      </div>
+      <div class="field">
+        <label for="voice">Voice</label>
+        <select id="voice" name="voice">
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="india">Indian English</option>
+          <option value="us">US English</option>
+          <option value="uk">UK English</option>
+        </select>
+      </div>
+      <button type="submit">Convert to speech</button>
+    </form>
+
+    {% if audio_file %}
+    <div class="result">
+      <div class="result-label">Audio output</div>
+      <audio controls>
+        <source src="{{ url_for('static', filename=audio_file) }}" type="audio/mpeg">
+      </audio>
+    </div>
+    {% endif %}
+  </div>
+{% endblock %}

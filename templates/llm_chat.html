@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Ask AI Chat - SmartSpeak{% endblock %}
+{% block content %}
+  <div class="page-header">
+    <div class="icon-badge">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v11H8l-4 4V4z"/></svg>
+    </div>
+    <div>
+      <h1>Ask AI Chat</h1>
+      <p>A RAG-augmented assistant — relevant past turns are retrieved before each reply.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="chat-box" id="chat-box">
+      {% for item in history %}
+      <div class="chat-msg user">
+        <div class="role">You</div>
+        <div class="bubble">{{ item.question }}</div>
+      </div>
+      <div class="chat-msg">
+        <div class="role">AI</div>
+        <div class="bubble">{{ item.answer }}</div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <form method="POST" class="chat-form">
+      <textarea name="prompt" rows="2" placeholder="Ask something..." required></textarea>
+      <button type="submit">Send</button>
+    </form>
+
+    {% if audio_file %}
+    <div class="result">
+      <div class="result-label">Spoken reply</div>
+      <audio controls>
+        <source src="{{ url_for('static', filename=audio_file) }}" type="audio/mpeg">
+      </audio>
+    </div>
+    {% endif %}
+
+    <div class="footer-links">
+      <a href="/reset_chat">Clear chat</a>
+    </div>
+  </div>
+{% endblock %}
+{% block scripts %}
+<script>
+  var chatBox = document.getElementById('chat-box');
+  if (chatBox) { chatBox.scrollTop = chatBox.scrollHeight; }
+</script>
+{% endblock %}

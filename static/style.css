@@ -1,0 +1,405 @@
+/* ==========================================================================
+   SmartSpeak design system
+   Neutral "ink & paper" palette, light + dark, sidebar + content-panel shell.
+   ========================================================================== */
+
+:root {
+  --bg: #F7F6F4;
+  --surface: #FFFFFF;
+  --surface-sunken: #EFEEEA;
+  --border: #E2E0DB;
+  --text: #1A1917;
+  --text-muted: #6F6D66;
+  --accent: #26241F;
+  --accent-contrast: #FFFFFF;
+  --danger: #8C3B2E;
+  --radius: 10px;
+  --shadow: 0 1px 2px rgba(20, 19, 17, 0.04), 0 4px 16px rgba(20, 19, 17, 0.05);
+}
+
+[data-theme="dark"] {
+  --bg: #121110;
+  --surface: #1C1B19;
+  --surface-sunken: #171614;
+  --border: #322F2B;
+  --text: #F3F1EC;
+  --text-muted: #9C9992;
+  --accent: #F3F1EC;
+  --accent-contrast: #17161B;
+  --danger: #E2A99A;
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.2), 0 8px 24px rgba(0, 0, 0, 0.28);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', -apple-system, sans-serif;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+h1, h2, h3, .wordmark {
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
+  letter-spacing: -0.01em;
+}
+
+.mono {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* ---------- Shell layout: sidebar + single content panel ---------- */
+
+.shell {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 240px;
+  flex-shrink: 0;
+  background: var(--surface-sunken);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  padding: 28px 18px;
+}
+
+.sidebar-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  padding-bottom: 24px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+/* Signature element: a small 5-bar waveform mark. Reused as the app's
+   visual signature -- bars animate gently on hover as a nod to "listening",
+   respecting reduced-motion preferences. */
+.wave-mark {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 22px;
+}
+
+.wave-mark span {
+  width: 3px;
+  border-radius: 2px;
+  background: var(--text);
+  display: inline-block;
+}
+
+.wave-mark span:nth-child(1) { height: 40%; }
+.wave-mark span:nth-child(2) { height: 75%; }
+.wave-mark span:nth-child(3) { height: 100%; }
+.wave-mark span:nth-child(4) { height: 60%; }
+.wave-mark span:nth-child(5) { height: 30%; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .sidebar-header:hover .wave-mark span {
+    animation: wave-pulse 0.9s ease-in-out infinite;
+  }
+  .wave-mark span:nth-child(2) { animation-delay: 0.1s; }
+  .wave-mark span:nth-child(3) { animation-delay: 0.2s; }
+  .wave-mark span:nth-child(4) { animation-delay: 0.3s; }
+  .wave-mark span:nth-child(5) { animation-delay: 0.4s; }
+}
+
+@keyframes wave-pulse {
+  0%, 100% { transform: scaleY(1); }
+  50% { transform: scaleY(0.4); }
+}
+
+.wordmark {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.sidebar nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: 8px;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.nav-item svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  stroke: currentColor;
+}
+
+.nav-item:hover {
+  background: var(--border);
+  color: var(--text);
+}
+
+.nav-item.active {
+  background: var(--accent);
+  color: var(--accent-contrast);
+}
+
+.sidebar-footer {
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.85rem;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.theme-toggle svg {
+  width: 15px;
+  height: 15px;
+  stroke: currentColor;
+}
+
+/* ---------- Content panel ---------- */
+
+.content {
+  flex: 1;
+  padding: 48px 56px;
+  max-width: 760px;
+}
+
+.page-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 32px;
+}
+
+.page-header .icon-badge {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: 9px;
+  background: var(--accent);
+  color: var(--accent-contrast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.page-header .icon-badge svg {
+  width: 19px;
+  height: 19px;
+  stroke: currentColor;
+}
+
+.page-header h1 {
+  font-size: 1.5rem;
+  margin: 0 0 4px 0;
+  font-weight: 600;
+}
+
+.page-header p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  max-width: 46ch;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: var(--shadow);
+}
+
+.card + .card { margin-top: 20px; }
+
+/* ---------- Form elements ---------- */
+
+label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+textarea, input[type="text"], input[type="file"], select {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  resize: vertical;
+}
+
+textarea:focus, input:focus, select:focus {
+  outline: 2px solid var(--text);
+  outline-offset: 1px;
+}
+
+.field { margin-bottom: 16px; }
+
+button, input[type="submit"] {
+  padding: 11px 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  font-family: inherit;
+  border-radius: 8px;
+  border: none;
+  background: var(--accent);
+  color: var(--accent-contrast);
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+button:hover, input[type="submit"]:hover { opacity: 0.85; }
+
+.btn-row { display: flex; gap: 10px; margin-top: 4px; }
+
+/* ---------- Results ---------- */
+
+.result {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+
+.result-label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+.result p { margin: 0 0 16px 0; line-height: 1.5; }
+
+audio { width: 100%; margin-top: 8px; }
+
+/* ---------- Home directory grid ---------- */
+
+.tool-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.tool-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  text-decoration: none;
+  color: var(--text);
+  transition: border-color 0.15s ease, transform 0.1s ease;
+}
+
+.tool-row:hover {
+  border-color: var(--text-muted);
+  transform: translateX(2px);
+}
+
+.tool-row .icon-badge {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: var(--surface-sunken);
+  border: 1px solid var(--border);
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.tool-row .icon-badge svg { width: 17px; height: 17px; stroke: currentColor; }
+
+.tool-row-text h3 { margin: 0 0 2px 0; font-size: 0.98rem; font-weight: 600; }
+.tool-row-text p { margin: 0; font-size: 0.85rem; color: var(--text-muted); }
+
+/* ---------- Chat ---------- */
+
+.chat-box {
+  max-height: 420px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.chat-msg { display: flex; gap: 10px; }
+.chat-msg .role {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  width: 44px;
+  flex-shrink: 0;
+  padding-top: 2px;
+}
+.chat-msg .bubble {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+.chat-msg.user .bubble { background: var(--surface-sunken); }
+
+.chat-form { display: flex; gap: 10px; }
+.chat-form textarea { flex: 1; }
+
+.footer-links {
+  margin-top: 16px;
+  display: flex;
+  gap: 16px;
+}
+.footer-links a {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  text-decoration: none;
+}
+.footer-links a:hover { color: var(--text); }
+
+@media (max-width: 720px) {
+  .shell { flex-direction: column; }
+  .sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--border); }
+  .content { padding: 28px 20px; }
+}

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Image to Speech - SmartSpeak{% endblock %}
+{% block content %}
+  <div class="page-header">
+    <div class="icon-badge">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M21 16l-5.5-5.5a2 2 0 0 0-2.8 0L4 19"/></svg>
+    </div>
+    <div>
+      <h1>Image to Speech</h1>
+      <p>Upload an image — SmartSpeak captions it, then reads the caption aloud.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <form method="POST" enctype="multipart/form-data">
+      <div class="field">
+        <label for="image">Image file</label>
+        <input type="file" id="image" name="image" accept=".jpg,.jpeg,.png" required>
+      </div>
+      <button type="submit">Caption &amp; speak</button>
+    </form>
+
+    {% if caption %}
+    <div class="result">
+      <div class="result-label">Caption</div>
+      <p>{{ caption }}</p>
+      <audio controls>
+        <source src="{{ url_for('static', filename=audio_file) }}" type="audio/mpeg">
+      </audio>
+    </div>
+    {% endif %}
+  </div>
+{% endblock %}

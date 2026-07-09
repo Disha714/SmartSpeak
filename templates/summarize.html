@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Speech Summarization - SmartSpeak{% endblock %}
+{% block content %}
+  <div class="page-header">
+    <div class="icon-badge">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l5 5v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M9 13h6M9 17h6M9 9h2"/></svg>
+    </div>
+    <div>
+      <h1>Speech Summarization</h1>
+      <p>Upload audio — SmartSpeak transcribes it, then summarizes what was said.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <form method="POST" enctype="multipart/form-data">
+      <div class="field">
+        <label for="audio">Audio file</label>
+        <input type="file" id="audio" name="audio" accept=".wav,.mp3,.ogg" required>
+      </div>
+      <button type="submit">Transcribe &amp; summarize</button>
+    </form>
+
+    {% if summary %}
+    <div class="result">
+      <div class="result-label">Transcript</div>
+      <p>{{ transcript }}</p>
+      <div class="result-label">Summary</div>
+      <p>{{ summary }}</p>
+      <audio controls>
+        <source src="{{ url_for('static', filename=audio_file) }}" type="audio/mpeg">
+      </audio>
+    </div>
+    {% endif %}
+  </div>
+{% endblock %}
