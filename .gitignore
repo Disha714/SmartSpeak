@@ -21,3 +21,5 @@ static/*.png
 .cache/
 flask_session/
 
+# Ignore the persisted RAG index -- runtime state, not source
+backend/rag_store/

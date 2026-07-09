@@ -24,10 +24,12 @@ into one Flask app.
    captioning). Turns the project from a text/audio tool into a multimodal
    one.
 7. **RAG-augmented Ask AI Chat** — retrieves the most relevant past turns
-   from a FAISS vector index (via sentence-transformers embeddings) instead
-   of stuffing the entire raw conversation history into every prompt. Chat
-   completions run on Groq (free tier, no credit card required, OpenAI-
-   compatible API).
+   using hybrid retrieval (dense FAISS embedding search + BM25 keyword
+   search, fused with Reciprocal Rank Fusion) instead of pure embedding
+   similarity or stuffing the whole raw history into every prompt. The
+   index persists to disk (`backend/rag_store/`), so retrieval survives a
+   server restart. Chat completions run on Groq (free tier, no credit card
+   required, OpenAI-compatible API).
 
 ---
 
@@ -60,6 +62,8 @@ SmartSpeak/
 │   └── .env.example
 ├── templates/                # Jinja2 templates for every route
 ├── static/                   # CSS + generated audio/uploads (gitignored)
+├── evaluation/
+│   └── eval_retrieval.py     # dense vs hybrid retrieval quality comparison
 ├── tests/
 │   └── test_app.py           # route-level tests, heavy models mocked out
 ├── legacy/                   # earlier prototype scripts, not used by the app
@@ -68,6 +72,55 @@ SmartSpeak/
 ```
 
 ---
+
+## Evaluating retrieval quality
+
+`evaluation/eval_retrieval.py` measures whether retrieval actually surfaces
+the right past turn for a given query, comparing dense-only (FAISS) against
+the hybrid (dense + BM25 via Reciprocal Rank Fusion) retrieval the app
+actually uses. The test set is split into "semantic" queries (paraphrases
+with no shared vocabulary) and "exact_keyword" queries (hinge on a specific
+name/ID/number) to show where each retrieval strategy wins or loses, rather
+than just reporting a single aggregate number.
+
+```bash
+python evaluation/eval_retrieval.py
+```
+
+This needs the sentence-transformers model downloaded (internet on first
+run only, then cached) and runs against a throwaway index — it never
+touches the app's real conversation history in `backend/rag_store/`.
+
+### Measured results
+
+Hit-rate@1 on a 22-turn corpus with deliberate near-duplicate distractors
+(four near-identical "ticket #XXXXX" entries, four near-identical invoice
+entries, four near-identical pet-visit entries, differing only by an
+ID/name):
+
+| Category        | Dense only | Hybrid (weighted RRF) |
+|------------------|:----------:|:----------------------:|
+| semantic         | 80%        | 80%                     |
+| exact_keyword    | 83%        | **100%**                |
+| **overall**      | 82%        | **91%**                 |
+
+The one case worth calling out specifically: a query asking about
+`ticket #48217` against three near-identical sibling tickets (`#48213`,
+`#48221`, `#48226`). Dense embeddings ranked the *wrong* ticket first —
+a known weak point, since embedding models have little reason to weight
+an arbitrary ID heavily. Plain (unweighted) RRF didn't fix it either: the
+correct document sat at dense-rank 2 / sparse-rank 0, while the wrong one
+sat at dense-rank 0 / sparse-rank 2 — an exact mirror image, which produces
+a genuine mathematical tie under unweighted RRF regardless of corpus size.
+The tie was then broken by incidental sort order rather than any real
+signal, and it happened to always favor dense.
+
+The fix was a small, evidence-based one: weight BM25 slightly higher than
+dense in the fusion (`SPARSE_WEIGHT = 1.3` vs `DENSE_WEIGHT = 1.0` in
+`rag_chat.py`), justified directly by the empirical finding above — dense
+is measurably less reliable on arbitrary IDs, BM25 is measurably reliable
+there, so ties between them shouldn't be split 50/50. That single change
+took `exact_keyword` from 83% to 100% with no regression on `semantic`.
 
 ## How to Run Locally
 

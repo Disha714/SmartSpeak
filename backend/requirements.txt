@@ -17,6 +17,7 @@ deep-translator
 # RAG chat (retrieval-augmented conversation)
 sentence-transformers
 faiss-cpu
+rank_bm25
 numpy
 
 # Image captioning (image-to-speech)
